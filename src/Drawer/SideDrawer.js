@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Dashboard from "../screens/Dashboard"
+import Chat from '../screens/ChatScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // create a component
 import CustomDrawer from "./Drawer"
@@ -26,12 +27,17 @@ export default function SideDrawer () {
             }}
             drawerContent={props => <CustomDrawer {...props}/>}
             >
-            <Drawer.Screen component={Dashboard} name='Dashboard' 
+            <Drawer.Screen component={Dashboard} name='Messages' 
             options={{
             drawerIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color={color} style={{marginLeft:-5}} />),
              headerShown: true}} 
-             
+             />
+            <Drawer.Screen component={Chat} name='ChatBox'  
+            options={{
+            drawerIcon: ({color}) => (
+            <Ionicons name="home-outline" size={22} color={color} style={{marginLeft:-5}} />),
+             headerShown: false}} 
              />
 
 

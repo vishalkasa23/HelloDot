@@ -1,18 +1,41 @@
 import auth from '@react-native-firebase/auth'
-
+import database from '@react-native-firebase/database';
 export const logoutUser = () => {
   auth().signOut()
 }
 
+export const AddUser = async (name,email,image,uid)=>{
+  try {
+    return await database().ref("users/"+uid).set({
+      name:name,
+      email:email,
+      image:image,
+      uuid:uid
+    })
+  }
+  catch(error){
+    return error
+  }
+}
+export const UpdateUser = async (image,uid)=>{
+  try {
+    return await database().ref("users/"+uid).update({
+      image:image
+    })
+  }
+  catch(error){
+    return error
+  }
+}
+
 export const signUpUser = async ({ name, email, password }) => {
   try {
-    const user = await 
-    auth()
-      .createUserWithEmailAndPassword(email, password)
+    const user = await auth().createUserWithEmailAndPassword(email, password)
       auth().currentUser.updateProfile({
       displayName: name,
+    }).then(()=>{
+      AddUser(name,email,"",auth().currentUser.uid)
     })
-    console.log(auth().currentUser.displayName)
     return { user }
   } catch (error) {
     return {
