@@ -16,7 +16,7 @@ export default function SideDrawer () {
             headerTintColor:"white",
             // headerTitleAlign:'center',
             headerStyle: {
-              backgroundColor: "#282534",
+              backgroundColor: "#128C7E",
               
             },
             drawerLabelStyle: {
@@ -37,7 +37,10 @@ export default function SideDrawer () {
             options={{
             drawerIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color={color} style={{marginLeft:-5}} />),
-             headerShown: false}} 
+             headerShown: false,
+             drawerItemStyle: { display: 'none'}
+            }} 
+
              />
 
 

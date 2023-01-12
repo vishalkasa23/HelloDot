@@ -17,7 +17,14 @@ export default function Dashboard({navigation}) {
     try{
       database().ref('users').on("value", (datasnapshot) => {
         const uuid = auth().currentUser.uid;
-        let users = [];
+        
+        new Promise((resolve,reject)=>{
+          let users = [];
+          let lastMessage="";
+          let lastDate="";
+          let lastTime="";
+          let properDate=""
+      
         datasnapshot.forEach((child) => {
           // console.log(child.val())
           if (child.val().uuid === uuid) {  
@@ -25,17 +32,60 @@ export default function Dashboard({navigation}) {
             setImageURL(child.val().image)
           }
           else {
-            users.push({ 
-              userName: child.val().name,
-              uuid: child.val().uuid,
-              imageURL:child.val().image
-            });
+            let newUser={
+              userId:"",
+              userName:"",
+              userProPic:"",
+              lastMessage:"",
+              lastDate:"",
+              lastTime:"",
+              properDate:""
+            }
+            new Promise((resolve,reject)=>{
+              database().ref("messages").child(uuid).child(child.val().uuid).orderByKey().limitToLast(1).on('value',(datasnapshots)=>{
+                if(datasnapshots.val()){
+                  datasnapshots.forEach((child)=>{
+                    lastMessage=child.val().message.image!=="" ? "Photo" : child.val().message.msg
+                    lastDate=child.val().message.date;
+                    lastTime=child.val().message.time;
+                    properDate=child.val().message.date+" "+child.val().message.time
+                  });
+                }
+                else {
+                  lastMessage=""
+                    lastDate=""
+                    lastTime=""
+                    properDate="" 
+                }
+                newUser.userId=child.val().uuid
+                newUser.userName=child.val().name
+                newUser.userProPic=child.val().image
+                newUser.lastMessage=lastMessage
+                newUser.lastTime=lastTime
+                newUser.lastDate=lastDate
+                newUser.properDate=properDate
+                return resolve(newUser)
+              });
+            }).then((newUser)=>{
+              users.push({ 
+                userName: newUser.userName,
+                uuid: newUser.userId,
+                imageURL:newUser.userProPic,
+                lastMessage:newUser.lastMessage,
+                lastTime:newUser.lastTime,
+                lastDate:newUser.lastDate,
+                properDate:newUser.lastDate ? new Date(newUser.properDate) : null
+              });
+              setAllUsers(users.sort((a,b)=>b.properDate-a.properDate));
+            })
+            return resolve(users)
+             }
+          });
+            }).then((users)=>{
+              setAllUsers(users.sort((a,b)=>b.properDate-a.properDate));
+            })
+          })
           }
-        });
-        setAllUsers(users);
-        // console.log("Arraydata",users)
-      })
-    }
     catch(error){
       alert(error)
     }
@@ -87,8 +137,12 @@ function openGallery(){
          <View style={{width:'12%', alignItems:'center',justifyContent:"center"}}>
           <Image source={{uri:item.imageURL === "" ? "https://i.ibb.co/tmZQsw2/ava3.webp" : item.imageURL}} style={{height:50,width:50,borderRadius:25}}></Image>
          </View>
-         <View style={{width:"85%", alignItems:'flex-start',justifyContent:'center',marginLeft:10}}>
+         <View style={{width:"65%", alignItems:'flex-start',justifyContent:'center',marginLeft:10}}>
           <Text style={{color:'black',fontSize:16,fontWeight:"bold"}}>{item.userName}</Text>
+          <Text style={{color:'black',fontSize:14,fontWeight:"bold"}}>{item.lastMessage}</Text>
+         </View>
+         <View style={{width:"20%", alignItems:'flex-start',justifyContent:'center',marginLeft:10}}>
+          <Text style={{color:'black',fontSize:16,fontWeight:"bold"}}>{item.lastTime}</Text>
          </View>
         </TouchableOpacity>
         <View style={{borderWidth:0.5, borderColor:"black"}}></View>

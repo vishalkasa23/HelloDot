@@ -26,12 +26,6 @@ export default class AppHeader extends Component{
                         <View style={{width:'80%',alignItems:'center'}}>
                             <Text style={{fontSize:25,fontWeight:'bold'}}>{title}</Text>
                         </View>}
-                        {/* {title ==="Messages" ? <View style={{width:"10%",alignItems:'flex-end',marginLeft:10}}>
-                            <TouchableOpacity onPress={()=>{onPress()}}>
-                                <Ionicons name="add" size={25} color="#000"/>
-                            </TouchableOpacity>
-
-                        </View> : null} */}
                     </View>
                 </View>
 
