@@ -11,6 +11,7 @@ import Loading from './LoadingScreen';
 import ImgToBase64 from 'react-native-image-base64';
 import {launchCamera,launchImageLibrary} from "react-native-image-picker"
 import moment from "moment"
+import BackgroundMain from '../components/BackgroundMain';
 // create a component
 function Chat (props){
     const [message,setmessage]=useState()
@@ -19,6 +20,7 @@ function Chat (props){
     const [allMessages,setallMessages]=useState()
     const [loader,setLoader]=useState(true)
     const [image,setImage]=useState()
+    const[BackgroundImage,setbackgroundImage]=useState()
     function getdata(CurrentUid,guestUid){
         try{
             // console.log(CurrentUid,guestUid)
@@ -64,6 +66,15 @@ function Chat (props){
         },100)
         
     },[guestUid])
+    function openGalleryBackground(){
+        launchImageLibrary("photo",(response)=>{
+          // console.log("res",response.assets)
+          response.assets ? response.assets.forEach((item)=>{
+            setbackgroundImage(item.uri)
+          }) : null
+          
+        })
+    }
     function openGallery(){
         launchImageLibrary("photo",(response)=>{
           // console.log("res",response.assets)
@@ -109,11 +120,12 @@ function Chat (props){
         }
     }
         return (
-        <View style={{flex:1,backgroundColor:"white"}}>
-
+        <BackgroundMain BackgroundImage={BackgroundImage ? BackgroundImage : ""}>
+        <View style={{flex:1}}>
+           
             {/* { console.log("FINALDATA",this.state.CurrentUid,this.state.guestUid)} */}
             {console.log("This is final",CurrentUid,guestUid)}
-            <AppHeader title={props.route.params.userName} navigation={props.navigation} onPress={()=>{props.navigation.goBack()}}/>
+            <AppHeader title={props.route.params.userName} navigation={props.navigation} onPress={()=>{props.navigation.goBack()}} openGalleryBackground={()=>openGalleryBackground()}/>
             { 
             loader ? <Loading/> :
             <FlatList
@@ -123,18 +135,18 @@ function Chat (props){
             keyExtractor={(index)=>index.toString()}
             renderItem={({item})=>(
                 <View style={{maxWidth:Dimensions.get('window').width / 2 + 10,alignSelf: CurrentUid===item.sendBy ? "flex-end" : "flex-start",margin:5}}>
-                    <View style={{borderRadius:25,backgroundColor:CurrentUid===item.sendBy ? "gray":"green"}}>
+                    <View style={{borderRadius:25,backgroundColor:CurrentUid===item.sendBy ? "#025D4B":"#202C33"}}>
                         {item.image==="" ? 
-                        <Text style={{color:"white",padding:10,fontSize:20,fontWeight:'bold'}}>
+                        <Text style={{color:"white",padding:10,fontSize:14,fontWeight:'bold'}}>
                             {item.message} {" "} <View style={{flexDirection:'column'}}>
                             {/* <Text style={{color:"white",fontSize:10}}>{item.date}</Text> */}
                             <Text style={{color:"white",fontSize:10}}>{item.time}</Text>
                             </View>
                         </Text> 
                         : 
-                        <View style={{width:Dimensions.get('window').width / 2 + 10,height:225,backgroundColor:'white',borderColor:'black'}}>
-                        <Image source={{uri:item.image}} style={{width:Dimensions.get('window').width / 2 + 10,height:200,resizeMode:'stretch',borderRadius:20}}/>
-                        <Text style={{fontSize:15,position:'absolute',bottom:5,right:5,color:'black'}}>{item.time}</Text>
+                        <View style={{width:Dimensions.get('window').width / 2+15,height:208,backgroundColor:'#025D4B',borderColor:'black',borderRadius:20}}>
+                        <Image source={{uri:item.image}} style={{width:Dimensions.get('window').width / 2+10,height:200,resizeMode:'stretch',borderRadius:20,margin:3}}/>
+                        <Text style={{fontSize:12,position:'absolute',bottom:8,right:10,color:'white'}}>{item.time}</Text>
                         </View>
                         }
                         
@@ -146,18 +158,20 @@ function Chat (props){
 
 
             </FlatList>}
-            <View style={{bottom:0,height:50,width:"100%",position:'absolute',flexDirection:'row',backgroundColor:'gray'}}>
+            <View style={{bottom:0,height:50,width:"100%",position:'absolute',flexDirection:'row',backgroundColor:'#202C33'}}>
                 <TouchableOpacity style={{width:"10%", marginRight:5,justifyContent:'center',alignItems:"center"}} onPress={()=>openGallery()}>
                     <Ionicons name="camera" size={30} color="#fff"/>
                 </TouchableOpacity>
                 <View style={{width:"78%",justifyContent:"center",marginLeft:1}}>
-                    <TextInput value={message} onChangeText={(text)=>setmessage(text)} placeholder='Enter Message' placeholderTextColor={"#000"} style={{height:40,borderRadius:20,backgroundColor:'white'}}></TextInput>
+                    <TextInput value={message} onChangeText={(text)=>setmessage(text)} placeholder='Message' placeholderTextColor={"#000"} style={{height:40,borderRadius:20,backgroundColor:'white',color:'black'}} ></TextInput>
                 </View>
                 <TouchableOpacity style={{width:"10%", marginLeft:1,justifyContent:'center',alignItems:"center"}} onPress={()=>{sendMessage()}}>
                     <Ionicons name="send" size={30} color="#fff"/>
                 </TouchableOpacity>
             </View>
+         
         </View>
+        </BackgroundMain>
     );
 };
 

@@ -31,7 +31,7 @@ export default function SideDrawer () {
             options={{
             drawerIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color={color} style={{marginLeft:-5}} />),
-             headerShown: true}} 
+             headerShown: false}} 
              />
             <Drawer.Screen component={Chat} name='ChatBox'  
             options={{

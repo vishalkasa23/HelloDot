@@ -2,10 +2,10 @@ import React from 'react'
 import { ImageBackground, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { theme } from '../core/theme'
 
-export default function Background({ children }) {
+export default function Background({ children,BackgroundImage}) {
   return (
     <ImageBackground
-      source={require('../assets/wp5912082.webp')}
+      source={require("../assets/wp5912082.webp")}
       resizeMode="cover"
       style={styles.background}
     >
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     width: '100%',
-    maxWidth: 340,
+    maxWidth: 540,
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',

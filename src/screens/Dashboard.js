@@ -7,11 +7,14 @@ import { Text, TouchableOpacity, View,Image } from 'react-native';
 import {launchCamera,launchImageLibrary} from "react-native-image-picker"
 import { UpdateUser } from '../api/auth-api';
 import ImgToBase64 from 'react-native-image-base64';
-import AppHeader from './AppHeader';
+// import AppHeader from './AppHeader';
+import AppHeaderMain from './AppHeaderMain';
+import Loading from './LoadingScreen';
 export default function Dashboard({navigation}) {
   const [allusers,setAllUsers]=useState()
   const [imageURL,setImageURL]=useState('')
   const [loggedInUsername,setloggedInUsername]=useState('')
+  const [loader,setloader]=useState(false)
 
   useEffect(()=>{
     try{
@@ -83,18 +86,19 @@ export default function Dashboard({navigation}) {
           });
             }).then((users)=>{
               setAllUsers(users.sort((a,b)=>b.properDate-a.properDate));
+              setloader(true)
             })
           })
           }
     catch(error){
       alert(error)
     }
-  },[])
+  },[loader])
 
 function openGallery(){
       launchImageLibrary("photo",(response)=>{
         // console.log("res",response.assets)
-        response ? response.assets.forEach((item)=>{
+        response.assets ? response.assets.forEach((item)=>{
           // console.log(item.uri)
           ImgToBase64.getBase64String(item.uri)
           .then(async(base64String) => {
@@ -111,12 +115,11 @@ function openGallery(){
   }
   return (
     <View style={{flex:1, backgroundColor:"white"}}>
-      <AppHeader title="Messages" navigation={navigation} onPress={()=>{auth().signOut()}}/>
-
-      <FlatList
+      <AppHeaderMain title="Messages" navigation={navigation} onPress={()=>{auth().signOut()}}/>
+      {!loader ? <Loading/> :  <FlatList
       alwaysBounceHorizontal={false}
       data={allusers}
-      style={{padding:5,marginTop:-220}}
+      style={{padding:5,marginTop:0}}
       keyExtractor={(_,index)=> index.toString()}
       ListHeaderComponent={
         <View style={{height:160, justifyContent:'center', alignItems:"center"}}>
@@ -129,6 +132,7 @@ function openGallery(){
         </View>
       }
       renderItem={({item})=>(
+        
         <View>
         <TouchableOpacity style={{flexDirection:'row',marginBottom:20,marginTop:20}} onPress={()=>{
           console.log(item.uuid)
@@ -137,12 +141,12 @@ function openGallery(){
          <View style={{width:'12%', alignItems:'center',justifyContent:"center"}}>
           <Image source={{uri:item.imageURL === "" ? "https://i.ibb.co/tmZQsw2/ava3.webp" : item.imageURL}} style={{height:50,width:50,borderRadius:25}}></Image>
          </View>
-         <View style={{width:"65%", alignItems:'flex-start',justifyContent:'center',marginLeft:10}}>
-          <Text style={{color:'black',fontSize:16,fontWeight:"bold"}}>{item.userName}</Text>
-          <Text style={{color:'black',fontSize:14,fontWeight:"bold"}}>{item.lastMessage}</Text>
+         <View style={{width:"65%", alignItems:'flex-start',justifyContent:'center'}}>
+          <Text style={{color:'black',fontSize:16,fontWeight:"bold",marginLeft:10}}>{item.userName}</Text>
+          <Text style={{color:'black',fontSize:14,fontWeight:"bold",marginLeft:10}}>{item.lastMessage}</Text>
          </View>
-         <View style={{width:"20%", alignItems:'flex-start',justifyContent:'center',marginLeft:10}}>
-          <Text style={{color:'black',fontSize:16,fontWeight:"bold"}}>{item.lastTime}</Text>
+         <View style={{width:"20%", alignItems:'flex-start',justifyContent:'center'}}>
+          <Text style={{color:'black',fontSize:14,fontWeight:"bold",marginRight:5}}>{item.lastTime}</Text>
          </View>
         </TouchableOpacity>
         <View style={{borderWidth:0.5, borderColor:"black"}}></View>
@@ -151,7 +155,8 @@ function openGallery(){
       >
 
 
-      </FlatList>
+      </FlatList>}
+      
     </View>
   )
 }
