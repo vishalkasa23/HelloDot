@@ -4,13 +4,14 @@ export const logoutUser = () => {
   auth().signOut()
 }
 
-export const AddUser = async (name,email,image,uid)=>{
+export const AddUser = async (name,email,image,uid,BackgroundImage)=>{
   try {
     return await database().ref("users/"+uid).set({
       name:name,
       email:email,
       image:image,
-      uuid:uid
+      uuid:uid,
+      BackgroundImage:BackgroundImage
     })
   }
   catch(error){
@@ -27,6 +28,17 @@ export const UpdateUser = async (image,uid)=>{
     return error
   }
 }
+export const UpdateUserBackground = async (BackgroundImage,uid)=>{
+  try {
+    return await database().ref("users/"+uid).update({
+      BackgroundImage:BackgroundImage
+    })
+  }
+  catch(error){
+    return error
+  }
+}
+
 
 export const signUpUser = async ({ name, email, password }) => {
   try {
@@ -34,7 +46,7 @@ export const signUpUser = async ({ name, email, password }) => {
       auth().currentUser.updateProfile({
       displayName: name,
     }).then(()=>{
-      AddUser(name,email,"",auth().currentUser.uid)
+      AddUser(name,email,"",auth().currentUser.uid,"")
     })
     return { user }
   } catch (error) {

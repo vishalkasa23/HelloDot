@@ -7,6 +7,7 @@ import Chat from '../screens/ChatScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // create a component
 import CustomDrawer from "./Drawer"
+import SearchScreen from '../screens/SearchScreen';
 const Drawer=createDrawerNavigator();
 export default function SideDrawer () {
     return (
@@ -31,9 +32,19 @@ export default function SideDrawer () {
             options={{
             drawerIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color={color} style={{marginLeft:-5}} />),
-             headerShown: false}} 
+             headerShown: false,
+             drawerItemStyle: { display: 'none'}}} 
              />
             <Drawer.Screen component={Chat} name='ChatBox'  
+            options={{
+            drawerIcon: ({color}) => (
+            <Ionicons name="home-outline" size={22} color={color} style={{marginLeft:-5}} />),
+             headerShown: false,
+             drawerItemStyle: { display: 'none'}
+            }} 
+
+             />
+             <Drawer.Screen component={SearchScreen} name='Search'  
             options={{
             drawerIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color={color} style={{marginLeft:-5}} />),

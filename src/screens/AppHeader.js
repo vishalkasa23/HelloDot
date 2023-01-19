@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const { width, height } = Dimensions.get('window');
 export default class AppHeader extends Component{
     render(){
-        const {title,onPress,navigation,openGalleryBackground}=this.props;
+        const {title,onPress,navigation,openGalleryBackground,profile}=this.props;
         return(
 
             // <View style={{height:50}}>
@@ -41,7 +41,7 @@ export default class AppHeader extends Component{
                 />
               </TouchableOpacity>
               <Image
-                source={{ uri: 'https://i.ibb.co/tmZQsw2/ava3.webp' }}
+                source={{ uri: profile ? profile : 'https://i.ibb.co/tmZQsw2/ava3.webp' }}
                 style={styles.chatImage}
               />
               <TouchableOpacity>

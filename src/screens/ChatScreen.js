@@ -12,6 +12,7 @@ import ImgToBase64 from 'react-native-image-base64';
 import {launchCamera,launchImageLibrary} from "react-native-image-picker"
 import moment from "moment"
 import BackgroundMain from '../components/BackgroundMain';
+import { UpdateUserBackground } from '../api/auth-api';
 // create a component
 function Chat (props){
     const [message,setmessage]=useState()
@@ -61,20 +62,51 @@ function Chat (props){
     })
     useEffect(()=>{
         sendMessage([])
+        // console.log("BackgroundImage",props.route.params.BackgroundImage)
+        setbackgroundImage(props.route.params.BackgroundImage)
         setTimeout(()=>{
             getdata(CurrentUid,guestUid)
         },100)
         
     },[guestUid])
+    // function openGalleryBackground(){
+    //     launchImageLibrary("photo",(response)=>{
+    //       // console.log("res",response.assets)
+    //       response.assets ? response.assets.forEach((item)=>{
+    //         setbackgroundImage(item.uri)
+    //       }) : null
+          
+    //     })
+    // }
     function openGalleryBackground(){
         launchImageLibrary("photo",(response)=>{
           // console.log("res",response.assets)
           response.assets ? response.assets.forEach((item)=>{
             setbackgroundImage(item.uri)
+            // console.log(item.uri)
+            ImgToBase64.getBase64String(item.uri)
+            .then(async(base64String) => {
+              const uuid = auth().currentUser.uid;
+              let source= "data:image/jpeg;base64,"+ base64String;
+              UpdateUserBackground(source,uuid).then(()=>{
+                setbackgroundImage(item.uri)
+              })
+            })
+            .catch(err => {console.log(err)});
           }) : null
           
         })
     }
+    // const MySeparator = React.memo(({ previous, current }) => {
+    //     console.log(previous,current)
+    //     // if (previous.date !== current.date) {
+    //     //   return (<View style={{ height: 1, backgroundColor: 'gray' }}>
+    //     //             <Text>{previous.date}</Text>
+    //     //   </View>);
+    //     // } else {
+    //     //   return null;
+    //     // }
+    //   });
     function openGallery(){
         launchImageLibrary("photo",(response)=>{
           // console.log("res",response.assets)
@@ -124,8 +156,8 @@ function Chat (props){
         <View style={{flex:1}}>
            
             {/* { console.log("FINALDATA",this.state.CurrentUid,this.state.guestUid)} */}
-            {console.log("This is final",CurrentUid,guestUid)}
-            <AppHeader title={props.route.params.userName} navigation={props.navigation} onPress={()=>{props.navigation.goBack()}} openGalleryBackground={()=>openGalleryBackground()}/>
+            {/* {console.log("propsdatanew",props.route.params.imageURL)} */}
+            <AppHeader title={props.route.params.userName} navigation={props.navigation} onPress={()=>{props.navigation.goBack()}} openGalleryBackground={()=>openGalleryBackground()} profile={props.route.params.imageURL}/>
             { 
             loader ? <Loading/> :
             <FlatList
@@ -133,6 +165,7 @@ function Chat (props){
             style={{marginBottom:60}}
             data={allMessages}
             keyExtractor={(index)=>index.toString()}
+            // ItemSeparatorComponent={MySeparator}
             renderItem={({item})=>(
                 <View style={{maxWidth:Dimensions.get('window').width / 2 + 10,alignSelf: CurrentUid===item.sendBy ? "flex-end" : "flex-start",margin:5}}>
                     <View style={{borderRadius:25,backgroundColor:CurrentUid===item.sendBy ? "#025D4B":"#202C33"}}>

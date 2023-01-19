@@ -56,7 +56,7 @@ const CustomDrawer = props => {
             <View>
               <Text style={{color:'white',fontWeight:'bold'}}>{user.displayName}</Text>
               {/* <Text style={{color:'white',fontWeight:'bold'}}>{user.email}</Text> */}
-              <Text style={{color:'white',fontWeight:'bold'}}>What's Up</Text>
+              {/* <Text style={{color:'white',fontWeight:'bold'}}>What's Up</Text> */}
             </View>
             <TouchableOpacity>
             <Image source={{ uri: photo}}  style={{ width: 50, height: 50, borderRadius: 30, margin:5 }} />
