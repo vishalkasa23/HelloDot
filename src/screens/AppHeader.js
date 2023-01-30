@@ -1,38 +1,54 @@
 import React,{Component} from "react"
-import {View,Text,TouchableOpacity,StyleSheet,Dimensions,Image} from "react-native"
+import {View,Text,TouchableOpacity,StyleSheet,Dimensions,Image,Pressable,Modal,TouchableWithoutFeedback} from "react-native"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const { width, height } = Dimensions.get('window');
 export default class AppHeader extends Component{
+  state = {
+    modalVisible: false,
+  };
     render(){
         const {title,onPress,navigation,openGalleryBackground,profile}=this.props;
+        const {modalVisible} = this.state;
         return(
-
-            // <View style={{height:50}}>
-            //     <View style={{paddingTop:15,backgroundColor:"#128C7E"}}>
-
-            //         <View style={{flexDirection:'row'}}>
-            //             {title ==="Messages" ? null:
-                        
-            //             <View style={{alignItems:'flex-start'}}>
-            //                 <TouchableOpacity onPress={()=>{navigation.goBack(null)}}>
-            //                     <Ionicons name="arrow-back" size={25} color="#000"/>
-            //                 </TouchableOpacity>
-            //                 </View>
-                        
-            //             } 
-            //             {title ==="Messages" ? <View style={{width:'80%',alignItems:'center'}}>
-            //                 <Text style={{fontSize:25,fontWeight:'bold'}}></Text>
-            //             </View> :
-            //             <View style={{width:'80%',alignItems:'center'}}>
-            //                 <Text style={{fontSize:25,fontWeight:'bold'}}>{title}</Text>
-            //             </View>}
-            //         </View>
-            //     </View>
-
-            // </View>
-
             <View style={styles.header}>
+              <Modal
+          // animationType="slide"
+          // transparent={true}
+          // style={{
+          //   backgroundColor: 'white',
+            // width:width-250,
+            // height:height-250
+            // alignSelf: 'center',paddingTop:300,
+            // marginLeft:300
+          
+          // }}
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            this.setState({modalVisible: !modalVisible});
+          }}>
+             {/* <TouchableWithoutFeedback 
+               style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, backgroundColor:'red'}}
+             onPress={() => {
+            this.setState({modalVisible: !modalVisible});
+          }}> */}
+          <TouchableOpacity onPress={() => {
+            this.setState({modalVisible: !modalVisible})}}>
+          <View style={styles.centeredView}>
+              <Text style={styles.modalText}>View contact</Text>
+              <Text style={styles.modalText}>Media, links, and docs</Text>
+              <Text style={styles.modalText}>Search</Text>
+              <Text style={styles.modalText}>Mute notifications</Text>
+              <TouchableOpacity onPress={openGalleryBackground}>
+              <Text style={styles.modalText}>WallPaper</Text>
+              </TouchableOpacity>
+              <Text style={styles.modalText}>More</Text>
+          </View>
+          </TouchableOpacity>
+          {/* </TouchableWithoutFeedback> */}
+        </Modal>
+
             <View style={styles.left} >
               <TouchableOpacity onPress={()=>{navigation.goBack(null)}}>
                 <Icon
@@ -49,10 +65,14 @@ export default class AppHeader extends Component{
               </TouchableOpacity>
             </View>
             <View style={styles.right} >
-              {/* <Icon name="call" color="#fff" size={23} style={{ padding: 5 }} />
-              <Icon name="attach-file" color="#fff" size={23} style={{ padding: 5 }} /> */}
-              <TouchableOpacity onPress={openGalleryBackground}>
-              <Icon name="more-vert" color="#fff" size={23} style={{ padding: 5 }} />
+              <TouchableOpacity onPress={()=>{}}>
+              <Icon name="videocam" color="#fff" size={23} style={{ padding: 10 }} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={()=>{}}>
+              <Icon name="call" color="#fff" size={23} style={{ padding: 10 }} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.setState({modalVisible: true})}>
+              <Icon name="more-vert" color="#fff" size={23} style={{ padding: 10 }} />
               </TouchableOpacity>
               
             </View>
@@ -66,6 +86,7 @@ const styles = StyleSheet.create({
       height,
     },
     header: {
+      // flex:1,
       height: 65,
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -78,6 +99,7 @@ const styles = StyleSheet.create({
     },
     right: {
       flexDirection: 'row',
+      
     },
     chatTitle: {
       color: '#fff',
@@ -90,5 +112,27 @@ const styles = StyleSheet.create({
       height: 30,
       borderRadius: 15,
       margin: 5,
-    }
+    },
+    centeredView: {
+      backgroundColor: '#202C33',
+      width:'50%',
+      height:230,
+      marginTop:18,
+      marginLeft:190,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+    },
+    modalText: {
+      marginTop:5,
+      marginBottom: 15,
+      marginLeft:10,
+      alignItems:'flex-start',
+      color:'white'
+    },
   });

@@ -29,6 +29,7 @@ function Chat (props){
                 let message=[]
                 dataSnapshot.forEach((data)=>{
                     // console.log(data.val().message.sender)
+                    console.log("UserData",data.val().message)
                     if(data.val().message.sender){
                         message.push({
                             sendBy:data.val().message.sender,
@@ -69,15 +70,6 @@ function Chat (props){
         },100)
         
     },[guestUid])
-    // function openGalleryBackground(){
-    //     launchImageLibrary("photo",(response)=>{
-    //       // console.log("res",response.assets)
-    //       response.assets ? response.assets.forEach((item)=>{
-    //         setbackgroundImage(item.uri)
-    //       }) : null
-          
-    //     })
-    // }
     function openGalleryBackground(){
         launchImageLibrary("photo",(response)=>{
           // console.log("res",response.assets)
@@ -97,16 +89,6 @@ function Chat (props){
           
         })
     }
-    // const MySeparator = React.memo(({ previous, current }) => {
-    //     console.log(previous,current)
-    //     // if (previous.date !== current.date) {
-    //     //   return (<View style={{ height: 1, backgroundColor: 'gray' }}>
-    //     //             <Text>{previous.date}</Text>
-    //     //   </View>);
-    //     // } else {
-    //     //   return null;
-    //     // }
-    //   });
     function openGallery(){
         launchImageLibrary("photo",(response)=>{
           // console.log("res",response.assets)

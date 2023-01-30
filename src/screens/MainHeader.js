@@ -10,32 +10,32 @@ const Header = (props) => (
   <View style={styles.top}>
     {/* {console.log("InHeaderPropsUser",props.usersData)} */}
     <TouchableOpacity onPress={()=>{props.navigation.openDrawer()}}>
-    <Text style={styles.logo}>WhatsApp</Text>
+    <Text style={styles.logo}>HelloDot</Text>
     </TouchableOpacity>
     
     <View style={styles.icons}>
     <TouchableOpacity>
         <Icon
           name="camera"
-          color="#fff"
+          color="#8596a0"
           size={23}
-          style={{ padding: 5 }}
+          style={{ padding: 10 }}
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>{props.navigation.navigate("Search",{userData:props.usersData})}}>
         <Icon
           name="search"
-          color="#fff"
+          color="#8596a0"
           size={23}
-          style={{ padding: 5 }}
+          style={{ padding: 10 }}
         />
       </TouchableOpacity>
       <TouchableOpacity>
         <Icon
           name="more-vert"
-          color="#fff"
+          color="#8596a0"
           size={23}
-          style={{ padding: 5 }}
+          style={{ padding: 10 }}
         />
       </TouchableOpacity>
     </View>
@@ -47,16 +47,16 @@ export default Header;
 const styles = StyleSheet.create({
   top: {
     flexDirection: 'row',
-    backgroundColor: '#364147',
+    backgroundColor: '#1f2c34',
     borderColor: '#fff',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 5,
-    paddingVertical: 10,
+    // paddingVertical: 10,
   },
   logo: {
     fontSize: 23,
-    color: '#fff',
+    color: '#8596a0',
     margin: 10,
     fontWeight: '500',
   },

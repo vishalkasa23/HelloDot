@@ -17,8 +17,9 @@ export default function Dashboard({navigation}) {
   const [imageURL,setImageURL]=useState('')
   const [loggedInUsername,setloggedInUsername]=useState('')
   const [loader,setloader]=useState(false)
+  const [lastMessageData,setlastMessageData]=useState(false)
   const [BackgroundImage,setbackgroundImage]=useState()
-  useEffect(()=>{
+  function getdata(){
     try{
       database().ref('users').on("value", (datasnapshot) => {
         const uuid = auth().currentUser.uid;
@@ -100,6 +101,9 @@ export default function Dashboard({navigation}) {
     catch(error){
       alert(error)
     }
+  }
+  useEffect(()=>{
+    getdata()
   },[loader])
 
 function openGallery(){
@@ -121,7 +125,7 @@ function openGallery(){
       })
   }
   return (
-    <View style={{flex:1, backgroundColor:"#202C33"}}>
+    <View style={{flex:1, backgroundColor:"#121b22"}}>
       {/* <AppHeaderMain title="Messages" navigation={navigation} onPress={()=>{auth().signOut()}}/> */}
       {!loader ? <Loading/> : 
       <>
