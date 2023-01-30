@@ -13,26 +13,11 @@ export default class AppHeader extends Component{
         return(
             <View style={styles.header}>
               <Modal
-          // animationType="slide"
-          // transparent={true}
-          // style={{
-          //   backgroundColor: 'white',
-            // width:width-250,
-            // height:height-250
-            // alignSelf: 'center',paddingTop:300,
-            // marginLeft:300
-          
-          // }}
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
             this.setState({modalVisible: !modalVisible});
           }}>
-             {/* <TouchableWithoutFeedback 
-               style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, backgroundColor:'red'}}
-             onPress={() => {
-            this.setState({modalVisible: !modalVisible});
-          }}> */}
           <TouchableOpacity onPress={() => {
             this.setState({modalVisible: !modalVisible})}}>
           <View style={styles.centeredView}>
@@ -46,7 +31,6 @@ export default class AppHeader extends Component{
               <Text style={styles.modalText}>More</Text>
           </View>
           </TouchableOpacity>
-          {/* </TouchableWithoutFeedback> */}
         </Modal>
 
             <View style={styles.left} >

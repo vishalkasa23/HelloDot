@@ -129,7 +129,7 @@ function openGallery(){
       {/* <AppHeaderMain title="Messages" navigation={navigation} onPress={()=>{auth().signOut()}}/> */}
       {!loader ? <Loading/> : 
       <>
-      <Header title="Messages" navigation={navigation} onPress={()=>{auth().signOut()}} usersData={allusers} /> 
+      {/* <Header title="Messages" navigation={navigation} onPress={()=>{auth().signOut()}} usersData={allusers} />  */}
       <FlatList
       alwaysBounceHorizontal={false}
       data={allusers}

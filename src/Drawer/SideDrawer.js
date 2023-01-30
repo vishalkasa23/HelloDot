@@ -8,6 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // create a component
 import CustomDrawer from "./Drawer"
 import SearchScreen from '../screens/SearchScreen';
+import TabHeader from '../screens/TabHeader';
 const Drawer=createDrawerNavigator();
 export default function SideDrawer () {
     return (
@@ -28,7 +29,7 @@ export default function SideDrawer () {
             }}
             drawerContent={props => <CustomDrawer {...props}/>}
             >
-            <Drawer.Screen component={Dashboard} name='Messages' 
+            <Drawer.Screen component={TabHeader} name='Messages' 
             options={{
             drawerIcon: ({color}) => (
             <Ionicons name="home-outline" size={22} color={color} style={{marginLeft:-5}} />),

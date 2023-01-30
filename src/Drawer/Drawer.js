@@ -49,7 +49,7 @@ const CustomDrawer = props => {
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: 10,
-              backgroundColor: '#282534',
+              backgroundColor: '#1f2c34',
               marginBottom: 10,
             }}
           >
@@ -70,7 +70,7 @@ const CustomDrawer = props => {
             right: 0,
             left: 0,
             bottom: -1,
-            backgroundColor: '#282534',
+            backgroundColor: '#1f2c34',
             padding: 20,
           }}
         onPress={Logout}

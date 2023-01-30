@@ -18,8 +18,8 @@ const SearchScreen = (props) => {
   
   // console.log("FinalProps",props.route.params.userData)
     return (
-      <View style={{flex:1, backgroundColor:"white"}}>
-        <SearchBar round searchIcon={{ size: 25 }} onChangeText={text => SearchFilterFunction(text)} onClear={text => SearchFilterFunction('')} placeholder="Type Here to Search..." value={search} containerStyle={{backgroundColor:'#202C33'}} inputContainerStyle={{backgroundColor:'#202C33'}} />
+      <View style={{flex:1, backgroundColor:"#1f2c34"}}>
+        <SearchBar round searchIcon={{ size: 25 }} onChangeText={text => SearchFilterFunction(text)} onClear={text => SearchFilterFunction('')} placeholder="Search..." value={search} containerStyle={{backgroundColor:'#202C33'}} inputContainerStyle={{backgroundColor:'#202C33'}} />
       <FlatList
       alwaysBounceHorizontal={false}
       data={filteredUser}
@@ -34,10 +34,10 @@ const SearchScreen = (props) => {
           <Image source={{uri:item.imageURL === "" ? "https://i.ibb.co/tmZQsw2/ava3.webp" : item.imageURL}} style={{height:50,width:50,borderRadius:25}}></Image>
          </View>
          <View style={{width:"65%", alignItems:'flex-start',justifyContent:'center'}}>
-          <Text style={{color:'black',fontSize:16,fontWeight:"bold",marginLeft:10}}>{item.userName}</Text>
+          <Text style={{color:'white',fontSize:16,fontWeight:"bold",marginLeft:10}}>{item.userName}</Text>
          </View>
         </TouchableOpacity>
-        <View style={{borderWidth:0.5, borderColor:"black"}}></View>
+        {/* <View style={{borderWidth:0.5, borderColor:"black"}}></View> */}
         </View>
       )}
       >
@@ -51,3 +51,5 @@ const SearchScreen = (props) => {
 
 //make this component available to the app
 export default SearchScreen;
+
+
