@@ -1,5 +1,6 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Dashboard from './Dashboard';
+import WorkInProgressScreen from "./WorkInProgress"
 const Tab = createMaterialTopTabNavigator();
 
 export default function MyTabs() {
@@ -20,8 +21,8 @@ export default function MyTabs() {
       }}
 >
       <Tab.Screen name="Chats" component={Dashboard} />
-      <Tab.Screen name="Status" component={Dashboard} />
-      <Tab.Screen name="Calls" component={Dashboard} />
+      <Tab.Screen name="Status" component={WorkInProgressScreen} />
+      <Tab.Screen name="Calls" component={WorkInProgressScreen} />
     </Tab.Navigator>
   );
 }
